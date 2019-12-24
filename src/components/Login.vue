@@ -36,7 +36,6 @@
 </template>
 
 <script>
-import axios from 'axios'
 
 export default {
   name: 'Login',
@@ -64,7 +63,7 @@ export default {
         if (!valid) {
           return
         }
-        const { data: res } = await axios.post('api/login', this.loginForm)
+        const { data: res } = await this.axios.post('api/login', this.loginForm)
         if (res.meta.status !== 200) {
           return this.$message.error('登陆失败')
         }
