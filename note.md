@@ -1,4 +1,12 @@
 # 电商后台管理
+## git
+git checkout -b xxx 新建并切换至指定分支
+git add . 添加到暂存区
+git commit -m "xxx" 提交到本地仓库
+git push -u origin xxx 提交代码到线上仓库的指定分支
+若线上仓库有readme而本地没有就会报错
+git pull --rebase origin master 将master分支的代码与本地合并
+
 ## 登陆/退出功能
   1. 需求：
     登陆页面输入用户名密码
