@@ -80,6 +80,22 @@ axios.interceptors.request.eject(myInterceptor)
 
 // 响应拦截器axios.interceptors.response同理
 ```
+## 用户管理页
+### element表格
+  可以通过vue的作用域插槽的方式获得子组件上的数据
+```js
+<el-table-column label="状态">
+  <template v-slot:default="scope">
+    <el-switch
+      v-model="scope.row.mg_state"
+      active-color="#13ce66"
+      @change="stateChange(scope.row)"
+    >
+    </el-switch>
+  </template>
+</el-table-column>
+```
+  使用scope.row可以获取到本行的数据
 ## 知识点补盲
   1. 关于cookie session token
   2. 关于async await Promise
