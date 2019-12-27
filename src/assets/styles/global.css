@@ -26,3 +26,15 @@ html, body, #app {
   color: #909399 !important;
   font-weight: bolder !important;
 }
+
+.el-dialog {
+  min-width: 500px;
+}
+
+.zk-table {
+  margin-top: 15px;
+}
+
+.el-cascader-panel {
+  height: 200px;
+}

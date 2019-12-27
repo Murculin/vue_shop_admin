@@ -5,7 +5,9 @@ import './plugins/element.js'
 import './assets/styles/reset.css'
 import './assets/styles/global.css'
 import axios from 'axios'
+import ZkTable from 'vue-table-with-tree-grid'
 
+Vue.component('tree-table', ZkTable)
 Vue.config.productionTip = false
 // axios请求拦截器
 axios.interceptors.request.use(config => {
