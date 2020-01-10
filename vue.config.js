@@ -13,7 +13,7 @@ module.exports = {
   devServer: {
     proxy: {
       '/api': {
-        target: 'https://www.liulongbin.top:8888/api/private/v1',
+        target: 'http://127.0.0.1:8888/api/private/v1/',
         pathRewrite: {
           '^/api': ''
         }

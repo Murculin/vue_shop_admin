@@ -5,10 +5,11 @@
 git checkout -b xxx 新建并切换至指定分支
 git add . 添加到暂存区
 git commit -m "xxx" 提交到本地仓库
-git push -u origin xxx 提交代码到线上仓库的指定分支
+git push 将本地的代码提交到线上仓库的对应分支
+git push -u origin xxx 创建并提交代码到线上仓库的指定分支
 若线上仓库有 readme 而本地没有就会报错
 git pull --rebase origin master 将 master 分支的代码与本地合并
-git merge master 将当前分支合并到master下
+git merge 将当前分支合并
 
 ## 登陆/退出功能
 
@@ -189,11 +190,11 @@ axios.interceptors.request.eject(myInterceptor)
 // 递归获取所有三级权限,保存到数组中
 getDefKeys (node, arr) {
   // 没有children属性的为三级权限
-  console.log(node)
   if (!node.children) {
     return arr.push(node.id)
   }
   node.children.forEach(item => {
+    // 有children则非三级权限,继续调用函数本身
     this.getDefKeys(item, arr)
   })
 },
@@ -203,12 +204,33 @@ getDefKeys (node, arr) {
 使用 vue-table-with-tree-grid 基于ivew的树形表格组件
 ### 联级选择器
 在需要选择有父子关系的选项时使用 el-cascader
+### 添加商品页面
+与编辑商品共用一个页面route'/goods/add'
+使用tabs标签分页,把5个页面的信息当做一个表单
+使用el-form标签包裹所有tab
+
+goods_cat 用级联选择器选取
+动态参数用 el-select勾选
+图片上传使用el-upload
+富文本编辑器vue-quill-editor
+
+最后提交时整体预验证和预处理
+上传数据的接口要求goods_cat attrs为字符串格式
+此时,级联选择器与goods_cat双向绑定 要求绑定对象是数组 否则会报错
+解决:
+对addForm中的数据操作时先深拷贝出一个新对象
+addForm负责渲染视图 新对象负责上传数据
+
+1) 将goods_cat转化为以,分割的字符串
+2) 将attrs转化为以‘空格’分割的字符串
 
 ## 知识点补盲
 
-1. 关于 cookie session token
+1. 关于 cookie session token维持登陆状态
 2. 关于 async await Promise
-3. 关于路由守卫
+3. 关于vue-router路由守卫
 4. axios 请求拦截器
 5. element 栅格
 6. vue 作用域插槽
+7. 深拷贝 原生/lodash
+8. vue的$nexttrick

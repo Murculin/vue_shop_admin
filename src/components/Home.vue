@@ -69,11 +69,11 @@ export default {
     },
     async getMenuList () {
       const { data: res } = await this.axios.get('/api/menus')
+      console.log(res)
       if (res.meta.status !== 200) {
-        return this.$message.error(res.meta.msg)
+        return this.$message.error('无访问权限')
       }
       this.menuList = res.data
-      console.log(res)
     }
   }
 }

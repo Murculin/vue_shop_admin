@@ -6,7 +6,12 @@ import './assets/styles/reset.css'
 import './assets/styles/global.css'
 import axios from 'axios'
 import ZkTable from 'vue-table-with-tree-grid'
+import VueQuillEditor from 'vue-quill-editor'
+import 'quill/dist/quill.core.css'
+import 'quill/dist/quill.snow.css'
+import 'quill/dist/quill.bubble.css'
 
+Vue.use(VueQuillEditor)
 Vue.component('tree-table', ZkTable)
 Vue.config.productionTip = false
 // axios请求拦截器

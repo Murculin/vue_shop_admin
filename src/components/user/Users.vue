@@ -287,7 +287,16 @@ export default {
       this.queryInfo.pagenum = newpage
       this.getUserList()
     },
-    stateChange() {},
+    // 修改用户状态
+    async stateChange(row) {
+      const state = row.mg_state
+      const { data: res } = await this.axios.put(`/api/users/${row.id}/state/${state}`)
+      if (res.meta.status !== 200) {
+        return this.$message.error('修改用户状态失败')
+      }
+      console.log(res)
+      this.$message.success('修改用户状态成功')
+    },
     // 添加用户对话框功能
     addDialogClosed() {
       this.$refs.addUserForm.resetFields()
@@ -392,6 +401,7 @@ export default {
           rid: this.selectedRoleId
         }
       )
+      console.log(this.selectedRoleId, res)
       if (res.meta.status !== 200) {
         return this.$message.error('分配角色失败')
       }
