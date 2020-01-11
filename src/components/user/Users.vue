@@ -292,7 +292,7 @@ export default {
       const state = row.mg_state
       const { data: res } = await this.axios.put(`/api/users/${row.id}/state/${state}`)
       if (res.meta.status !== 200) {
-        return this.$message.error('修改用户状态失败')
+        return this.$message.error(res.meta.msg)
       }
       console.log(res)
       this.$message.success('修改用户状态成功')
@@ -311,7 +311,7 @@ export default {
           this.addUserForm
         )
         if (res.meta.status !== 201) {
-          this.$message.error('添加失败,请检查网络状况')
+          this.$message.error(res.meta.msg)
         }
         this.$message.success('添加用户成功')
         this.addDialogVisible = false
@@ -323,7 +323,7 @@ export default {
     async handleClickEdit(id) {
       const { data: res } = await this.axios.get('api/users/' + id)
       if (res.meta.status !== 200) {
-        return this.$message.error('获取用户详情失败')
+        return this.$message.error(res.meta.msg)
       }
       this.editUserForm = res.data
       this.editDialogVisible = true
@@ -345,7 +345,7 @@ export default {
           }
         )
         if (res.meta.status !== 200) {
-          return this.$message.error('更新用户信息失败')
+          return this.$message.error(res.meta.msg)
         }
         this.editDialogVisible = false
         this.getUserList()
@@ -364,7 +364,7 @@ export default {
             res = res.data
             console.log(res)
             if (res.meta.status !== 200) {
-              return this.$message.error('删除用户失败')
+              return this.$message.error(res.meta.msg)
             }
             this.getUserList()
             this.$message.success('已删除该用户')
@@ -403,7 +403,7 @@ export default {
       )
       console.log(this.selectedRoleId, res)
       if (res.meta.status !== 200) {
-        return this.$message.error('分配角色失败')
+        return this.$message.error(res.meta.msg)
       }
       this.$message.success('分配角色成功')
       this.getUserList()

@@ -301,7 +301,7 @@ export default {
           }
         )
         if (res.meta.status !== 201) {
-          return this.$message.error('添加参数失败')
+          return this.$message.error(res.meta.msg)
         }
         this.$message.success('添加参数成功')
         this.getParamsList()
@@ -328,7 +328,7 @@ export default {
           attr_sel: this.activeName
         })
         if (res.meta.status !== 200) {
-          return this.$message.error('编辑失败')
+          return this.$message.error(res.meta.msg)
         }
         this.editParamsForm = {
           attr_name: '',
@@ -364,7 +364,7 @@ export default {
           attr_vals: vals
         })
         if (res.meta.status !== 200) {
-          this.$message.error('添加失败')
+          this.$message.error(res.meta.msg)
         }
         this.$message.success(res.meta.msg)
       } else {
@@ -382,7 +382,7 @@ export default {
         attr_vals: vals
       })
       if (res.meta.status !== 200) {
-        this.$message.error('删除失败')
+        this.$message.error(res.meta.msg)
       }
       this.$message.success(res.meta.msg)
       console.log(vals, res)

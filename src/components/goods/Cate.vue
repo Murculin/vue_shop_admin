@@ -238,7 +238,7 @@ export default {
           this.addCateForm
         )
         if (res.meta.status !== 201) {
-          return this.$message.error('添加分类失败')
+          return this.$message.error(res.meta.msg)
         }
         this.$message.success('添加分类成功')
         this.getCateList()
@@ -281,7 +281,7 @@ export default {
           }
         )
         if (res.meta.status !== 200) {
-          return this.$message.error('编辑分类失败')
+          return this.$message.error(res.meta.msg)
         }
         this.$message.success('编辑成功')
         this.editDialogVisible = false
@@ -299,7 +299,7 @@ export default {
           this.axios.delete('api/categories/' + id).then(res => {
             res = res.data
             if (res.meta.status !== 200) {
-              return this.$message.error('删除失败')
+              return this.$message.error(res.meta.msg)
             }
             this.getCateList()
             this.$message.success('已删除该分类')

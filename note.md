@@ -240,6 +240,40 @@ getDefKeys (node, arr) {
    2) 将attrs转化为以‘空格’分割的字符串
 
    
+## echarts
+1. npm i echarts --save
+2. 在需要使用echarts的页面import 
+```js
+import echarts from 'echarts'
+```
+3. 在mouted生命周期中初始化echarts 指定宽高和挂载的dom节点
+```js
+var myChart = echarts.init(document.getElementById('main'))
+```
+4. 写配置对象option
+```js
+var option = {
+      title: {
+        text: 'ECharts 入门示例'
+      },
+      tooltip: {},
+      legend: {
+        data: ['销量']
+      },
+      xAxis: {
+        data: ['衬衫', '羊毛衫', '雪纺衫', '裤子', '高跟鞋', '袜子']
+      },
+      yAxis: {},
+      series: [
+        {
+          name: '销量',
+          type: 'bar',
+          data: [5, 20, 36, 10, 10, 20]
+        }
+      ]
+    }
+```
+5. 使用配置对象 myChart.setOption(option)
 
 ## 知识点补盲
 

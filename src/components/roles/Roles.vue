@@ -209,7 +209,7 @@ export default {
         }
         const { data: res } = await this.axios.post('api/roles', this.addRoleForm)
         if (res.meta.status !== 201) {
-          return this.$message.error('添加角色失败')
+          return this.$message.error(res.meta.msg)
         }
         this.getRolesList()
         this.addDialogVisible = false
@@ -235,7 +235,7 @@ export default {
           roleDesc: this.editRoleForm.roleDesc
         })
         if (res.meta.status !== 200) {
-          return this.$message.error('更新角色失败')
+          return this.$message.error(res.meta.msg)
         }
         this.editDialogVisible = false
         this.getRolesList()
@@ -256,7 +256,7 @@ export default {
           res = res.data
           console.log(res)
           if (res.meta.status !== 200) {
-            return this.$message.error('删除角色失败')
+            return this.$message.error(res.meta.msg)
           }
           this.getRolesList()
           this.$message.success('已删除该角色')
@@ -276,7 +276,7 @@ export default {
           res = res.data
           console.log(res)
           if (res.meta.status !== 200) {
-            return this.$message.error('删除权限失败')
+            return this.$message.error(res.meta.msg)
           }
           role.children = res.data
           this.$message.success('已删除该权限')
@@ -318,7 +318,7 @@ export default {
         rids: rids
       })
       if (res.meta.status !== 200) {
-        return this.$message.error('分配权限成功')
+        return this.$message.error(res.meta.msg)
       }
       this.$message.success('分配权限成功')
       this.getRolesList()

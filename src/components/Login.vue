@@ -36,7 +36,7 @@
 </template>
 
 <script>
-
+import { mapMutations } from 'vuex'
 export default {
   name: 'Login',
   data () {
@@ -66,16 +66,21 @@ export default {
         const { data: res } = await this.axios.post('/api/login', this.loginForm)
         console.log(res)
         if (res.meta.status !== 200) {
-          return this.$message.error('登陆失败')
+          return this.$message.error(res.meta.msg)
         }
         this.$message.success('登陆成功')
         sessionStorage.setItem('token', res.data.token)
+        localStorage.setItem('user', JSON.stringify(res.data))
+        this.setUser(res.data)
         this.$router.push('/home')
       })
     },
     resetForm () {
       this.$refs.loginForm.resetFields()
-    }
+    },
+    ...mapMutations([
+      'setUser'
+    ])
   }
 }
 </script>

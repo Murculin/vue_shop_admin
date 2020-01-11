@@ -2,7 +2,12 @@
   <el-container class="home-container">
     <el-header>
       <span>电商后台管理系统</span>
-      <el-button type="info" @click="logout">退出</el-button>
+      <div>
+        <span class="userInfo">
+          欢迎 {{ this.user.username }}
+        </span>
+        <el-button type="info" @click="logout">退出</el-button>
+      </div>
     </el-header>
     <el-container>
       <el-aside width="200px">
@@ -45,6 +50,7 @@
 </template>
 
 <script>
+import { mapState } from 'vuex'
 export default {
   name: 'Home',
   data () {
@@ -58,6 +64,11 @@ export default {
         '145': 'el-icon-s-marketing'
       }
     }
+  },
+  computed: {
+    ...mapState([
+      'user'
+    ])
   },
   created () {
     this.getMenuList()
@@ -92,7 +103,9 @@ export default {
   justify-content space-between
   color $titleFontColor
   font-size $font-size-lx
-
+  .userInfo
+    font-size 14px
+    margin-right 10px
 .el-aside
   background-color $asideColor
   color $titleFontColor
