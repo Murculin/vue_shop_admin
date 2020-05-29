@@ -196,7 +196,7 @@ export default {
   },
   methods: {
     async getCateList() {
-      const { data: res } = await this.axios.get('api/categories', {
+      const { data: res } = await this.axios.get('/categories', {
         params: this.queryInfo
       })
       if (res.meta.status !== 200) {
@@ -217,7 +217,7 @@ export default {
     },
     // 添加分类
     async handleClickAdd() {
-      const { data: res } = await this.axios.get('api/categories', {
+      const { data: res } = await this.axios.get('/categories', {
         params: {
           type: 2
         }
@@ -234,7 +234,7 @@ export default {
           return
         }
         const { data: res } = await this.axios.post(
-          'api/categories',
+          '/categories',
           this.addCateForm
         )
         if (res.meta.status !== 201) {
@@ -275,7 +275,7 @@ export default {
           return
         }
         const { data: res } = await this.axios.put(
-          `api/categories/${this.editCateForm.cat_id}`,
+          `/categories/${this.editCateForm.cat_id}`,
           {
             cat_name: this.editCateForm.cat_name
           }
@@ -296,7 +296,7 @@ export default {
         type: 'error'
       })
         .then(() => {
-          this.axios.delete('api/categories/' + id).then(res => {
+          this.axios.delete('/categories/' + id).then(res => {
             res = res.data
             if (res.meta.status !== 200) {
               return this.$message.error(res.meta.msg)

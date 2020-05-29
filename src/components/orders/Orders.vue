@@ -158,7 +158,7 @@ export default {
   methods: {
     // 获取数据
     async getOrderList() {
-      const { data: res } = await this.axios.get('/api/orders', {
+      const { data: res } = await this.axios.get('/orders', {
         params: this.queryInfo
       })
       console.log(res)
@@ -193,7 +193,7 @@ export default {
     },
     // 物流信息功能
     async handleClickLocation(row) {
-      const { data: res } = await this.axios.get('/api/kuaidi/1106975712662')
+      const { data: res } = await this.axios.get('/kuaidi/1106975712662')
       console.log(res)
       if (res.meta.status !== 200) {
         this.$message.error(res.meta.msg)

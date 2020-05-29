@@ -36,10 +36,10 @@
             <el-form-item label="商品名称" prop="goods_name">
               <el-input v-model="addForm.goods_name"></el-input>
             </el-form-item>
-            <el-form-item label="商品价格" prop="goods_price">
+            <el-form-item label="商品价格(￥)" prop="goods_price">
               <el-input v-model.number="addForm.goods_price"></el-input>
             </el-form-item>
-            <el-form-item label="商品重量" prop="goods_weight">
+            <el-form-item label="商品重量(kg)" prop="goods_weight">
               <el-input v-model.number="addForm.goods_weight"></el-input>
             </el-form-item>
             <el-form-item label="商品数量" prop="goods_number">
@@ -129,7 +129,7 @@ export default {
       // 图片列表
       pics: [],
       // 图片上传地址
-      uploadUrl: 'http://127.0.0.1:8888/api/private/v1/upload',
+      uploadUrl: 'https://www.liulongbin.top:8888/api/private/v1/upload',
       ajaxHeader: {
         Authorization: window.sessionStorage.getItem('token')
       },
@@ -169,11 +169,35 @@ export default {
   },
   created() {
     this.getCateList()
+    if (this.$route.params.id) { // 如果路由信息中有id 则为修改页面
+      this.getGoods(this.$route.params.id)
+    }
   },
   methods: {
+    // 根据id获取商品详情 用于编辑
+    async getGoods(id) {
+      let { data: res } = await this.axios.get('/goods/' + id)
+      console.log(res)
+      if (res.meta.status !== 200) {
+        this.$message.error(res.meta.msg)
+        this.$router.back(-1)
+        return
+      }
+      res = res.data
+      this.addForm = {
+        goods_name: res.goods_name,
+        goods_cat: res.goods_cat,
+        goods_price: res.goods_price,
+        goods_number: res.goods_number,
+        goods_weight: res.goods_weight,
+        goods_introduce: res.goods_introduce,
+        pics: res.pics,
+        attrs: []
+      }
+    },
     // 获取商品分类
     async getCateList() {
-      const { data: res } = await this.axios.get('api/categories')
+      const { data: res } = await this.axios.get('/categories')
       if (res.meta.status !== 200) {
         return this.$message.error('获取商品分类列表失败')
       }
@@ -183,7 +207,7 @@ export default {
     // 获取动态列表
     async getParamsListMany() {
       const { data: res } = await this.axios.get(
-        `api/categories/${this.addForm.goods_cat[2]}/attributes/`,
+        `/categories/${this.addForm.goods_cat[2]}/attributes/`,
         {
           params: {
             sel: 'many'
@@ -205,7 +229,7 @@ export default {
     // 获取静态属性
     async getParamsListOnly() {
       const { data: res } = await this.axios.get(
-        `api/categories/${this.addForm.goods_cat[2]}/attributes/`,
+        `/categories/${this.addForm.goods_cat[2]}/attributes/`,
         {
           params: {
             sel: 'only'
@@ -294,16 +318,31 @@ export default {
       })
       form.attrs = this.addForm.attrs
       console.log(form)
-      // 发起请求添加商品
-      this.addGoods(form)
+      if (this.$route.params.id) {
+        // 发起修改请求
+        this.editGoods(form)
+      } else {
+        // 发起请求添加商品
+        this.addGoods(form)
+      }
     },
     async addGoods(form) {
-      const { data: res } = await this.axios.post('/api/goods', form)
+      const { data: res } = await this.axios.post('/goods', form)
       console.log(res)
       if (res.meta.status !== 201) {
         return this.$message.error(res.meta.msg)
       }
       this.$message.success('添加商品成功')
+      this.$router.back(-1)
+    },
+    async editGoods(form) {
+      const { data: res } = await this.axios.put('/goods/' + this.$route.params.id, form)
+      console.log(res)
+      if (res.meta.status !== 200) {
+        return this.$message.error(res.meta.msg)
+      }
+      this.$message.success('修改商品成功')
+      this.$router.back(-1)
     }
   }
 }

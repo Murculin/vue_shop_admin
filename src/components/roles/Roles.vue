@@ -191,7 +191,7 @@ export default {
   methods: {
     // 获取角色列表
     async getRolesList () {
-      const { data: res } = await this.axios.get('api/roles')
+      const { data: res } = await this.axios.get('/roles')
       if (res.meta.status !== 200) {
         return this.$message.error('获取角色列表失败')
       }
@@ -207,7 +207,7 @@ export default {
         if (!valid) {
           return
         }
-        const { data: res } = await this.axios.post('api/roles', this.addRoleForm)
+        const { data: res } = await this.axios.post('/roles', this.addRoleForm)
         if (res.meta.status !== 201) {
           return this.$message.error(res.meta.msg)
         }
@@ -218,9 +218,9 @@ export default {
     },
     // 编辑角色
     async handleClickEdit (id) {
-      const { data: res } = await this.axios.get('api/roles/' + id)
+      const { data: res } = await this.axios.get('/roles/' + id)
       if (res.meta.status !== 200) {
-        return this.$message.error('获取用户详情失败')
+        return this.$message.error(res.meta.msg)
       }
       this.editRoleForm = res.data
       this.editDialogVisible = true
@@ -230,7 +230,7 @@ export default {
         if (!valid) {
           return
         }
-        const { data: res } = await this.axios.put('api/roles/' + this.editRoleForm.roleId, {
+        const { data: res } = await this.axios.put('/roles/' + this.editRoleForm.roleId, {
           roleName: this.editRoleForm.roleName,
           roleDesc: this.editRoleForm.roleDesc
         })
@@ -252,7 +252,7 @@ export default {
         cancelButtonText: '取消',
         type: 'error'
       }).then(() => {
-        this.axios.delete('api/roles/' + id).then((res) => {
+        this.axios.delete('/roles/' + id).then((res) => {
           res = res.data
           console.log(res)
           if (res.meta.status !== 200) {
@@ -272,7 +272,7 @@ export default {
         cancelButtonText: '取消',
         type: 'error'
       }).then(() => {
-        this.axios.delete(`api/roles/${role.id}/rights/${rightId}`).then((res) => {
+        this.axios.delete(`/roles/${role.id}/rights/${rightId}`).then((res) => {
           res = res.data
           console.log(res)
           if (res.meta.status !== 200) {
@@ -288,9 +288,9 @@ export default {
     // 分配权限
     async handleClickSetRights (role) {
       this.role = role
-      const { data: res } = await this.axios.get('api/rights/tree')
+      const { data: res } = await this.axios.get('/rights/tree')
       if (res.meta.status !== 200) {
-        return this.$message.error('获取权限列表失败')
+        return this.$message.error(res.meta.msg)
       }
       this.rightsList = res.data
       this.getDefKeys(role, this.defKeys)
@@ -300,7 +300,6 @@ export default {
     // 递归获取所有三级权限,保存到数组中
     getDefKeys (node, arr) {
       // 没有children属性的为三级权限
-      console.log(node)
       if (!node.children) {
         return arr.push(node.id)
       }
@@ -314,7 +313,7 @@ export default {
     async setRights () {
       const keyArr = this.$refs.tree.getHalfCheckedKeys().concat(this.$refs.tree.getCheckedKeys())
       const rids = keyArr.join(',')
-      const { data: res } = await this.axios.post(`api/roles/${this.role.id}/rights`, {
+      const { data: res } = await this.axios.post(`/roles/${this.role.id}/rights`, {
         rids: rids
       })
       if (res.meta.status !== 200) {

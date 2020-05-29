@@ -239,7 +239,7 @@ export default {
   methods: {
     // 获取分类列表
     async getCateList () {
-      const { data: res } = await this.axios.get('api/categories')
+      const { data: res } = await this.axios.get('/categories')
       if (res.meta.status !== 200) {
         return this.$message.error('获取商品分类列表失败')
       }
@@ -248,7 +248,7 @@ export default {
     },
     // 获取属性列表
     async getParamsList () {
-      const { data: res } = await this.axios.get(`api/categories/${this.cateId}/attributes/`, {
+      const { data: res } = await this.axios.get(`/categories/${this.cateId}/attributes/`, {
         params: {
           sel: this.activeName
         }
@@ -294,7 +294,7 @@ export default {
           return
         }
         const { data: res } = await this.axios.post(
-          `api/categories/${this.cateId}/attributes`,
+          `/categories/${this.cateId}/attributes`,
           {
             attr_name: this.addParamsForm.attr_name,
             attr_sel: this.activeName
@@ -323,7 +323,7 @@ export default {
         if (!valid) {
           return
         }
-        const { data: res } = await this.axios.put(`api/categories/${this.cateId}/attributes/${this.editParamsForm.attr_id}`, {
+        const { data: res } = await this.axios.put(`/categories/${this.cateId}/attributes/${this.editParamsForm.attr_id}`, {
           attr_name: this.editParamsForm.attr_name,
           attr_sel: this.activeName
         })
@@ -341,7 +341,7 @@ export default {
     },
     // del
     handleClickDel (id) {
-      del(id, `api/categories/${this.cateId}/attributes/`, this.getParamsList, this)
+      del(id, `/categories/${this.cateId}/attributes/`, this.getParamsList, this)
     },
     // tag
     showInput (scope) {
@@ -358,7 +358,7 @@ export default {
         scope.inputVisible = false
         scope.inputValue = ''
         vals = vals.join(' ')
-        const { data: res } = await this.axios.put(`api/categories/${this.cateId}/attributes/${scope.attr_id}`, {
+        const { data: res } = await this.axios.put(`/categories/${this.cateId}/attributes/${scope.attr_id}`, {
           attr_name: scope.attr_name,
           attr_sel: scope.attr_sel,
           attr_vals: vals
@@ -376,7 +376,7 @@ export default {
       let vals = scope.attr_vals
       vals.splice(index, 1)
       vals = vals.join(' ')
-      const { data: res } = await this.axios.put(`api/categories/${this.cateId}/attributes/${scope.attr_id}`, {
+      const { data: res } = await this.axios.put(`/categories/${this.cateId}/attributes/${scope.attr_id}`, {
         attr_name: scope.attr_name,
         attr_sel: scope.attr_sel,
         attr_vals: vals

@@ -102,7 +102,7 @@ export default {
   methods: {
     // 获取商品列表
     async getGoodsList () {
-      const { data: res } = await this.axios('api/goods', {
+      const { data: res } = await this.axios('/goods', {
         params: this.queryInfo
       })
       if (res.meta.status !== 200) {
@@ -143,10 +143,11 @@ export default {
     // 编辑
     handleClickEdit (row) {
       console.log(row)
+      this.$router.push('/goods/add/' + row.goods_id)
     },
     // 删除
     handleClickDel (row) {
-      const url = 'api/goods/'
+      const url = '/goods/'
       del(row.goods_id, url, this.getGoodsList, this)
     }
   }

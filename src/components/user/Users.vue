@@ -51,30 +51,10 @@
         <el-table-column label="操作" width="180px">
           <template v-slot:default="scope">
             <div class="table-config">
-              <el-button
-                type="primary"
-                icon="el-icon-edit"
-                size="mini"
-                @click="handleClickEdit(scope.row.id)"
-              ></el-button>
-              <el-button
-                type="danger"
-                icon="el-icon-delete"
-                size="mini"
-                @click="handleClickDel(scope.row.id)"
-              ></el-button>
-              <el-tooltip
-                effect="dark"
-                content="分配角色"
-                placement="top"
-                :enterable="false"
-              >
-                <el-button
-                  type="warning"
-                  icon="el-icon-s-tools"
-                  size="mini"
-                  @click="handleClickRole(scope.row)"
-                ></el-button>
+              <el-button type="primary" icon="el-icon-edit" size="mini" @click="handleClickEdit(scope.row.id)"></el-button>
+              <el-button type="danger" icon="el-icon-delete" size="mini" @click="handleClickDel(scope.row.id)"></el-button>
+              <el-tooltip effect="dark" content="分配角色" placement="top" :enterable="false">
+                <el-button type="warning" icon="el-icon-s-tools" size="mini" @click="handleClickRole(scope.row)"></el-button>
               </el-tooltip>
             </div>
           </template>
@@ -268,7 +248,7 @@ export default {
   methods: {
     // 获取用户列表
     async getUserList() {
-      const { data: res } = await this.axios.get('/api/users', {
+      const { data: res } = await this.axios.get('/users', {
         params: this.queryInfo
       })
       if (res.meta.status !== 200) {
@@ -290,7 +270,7 @@ export default {
     // 修改用户状态
     async stateChange(row) {
       const state = row.mg_state
-      const { data: res } = await this.axios.put(`/api/users/${row.id}/state/${state}`)
+      const { data: res } = await this.axios.put(`/users/${row.id}/state/${state}`)
       if (res.meta.status !== 200) {
         return this.$message.error(res.meta.msg)
       }
@@ -307,7 +287,7 @@ export default {
           return
         }
         const { data: res } = await this.axios.post(
-          '/api/users',
+          '/users',
           this.addUserForm
         )
         if (res.meta.status !== 201) {
@@ -321,7 +301,7 @@ export default {
     // 列表功能区
     // 点击编辑按钮
     async handleClickEdit(id) {
-      const { data: res } = await this.axios.get('api/users/' + id)
+      const { data: res } = await this.axios.get('/users/' + id)
       if (res.meta.status !== 200) {
         return this.$message.error(res.meta.msg)
       }
@@ -338,7 +318,7 @@ export default {
           return
         }
         const { data: res } = await this.axios.put(
-          'api/users/' + this.editUserForm.id,
+          '/users/' + this.editUserForm.id,
           {
             email: this.editUserForm.email,
             mobile: this.editUserForm.mobile
@@ -360,7 +340,7 @@ export default {
         type: 'error'
       })
         .then(() => {
-          this.axios.delete('api/users/' + id).then(res => {
+          this.axios.delete('/users/' + id).then(res => {
             res = res.data
             console.log(res)
             if (res.meta.status !== 200) {
@@ -379,7 +359,7 @@ export default {
       this.userInfo = user
       console.log(user)
       this.roleDialogVisible = true
-      const { data: res } = await this.axios.get('api/roles')
+      const { data: res } = await this.axios.get('/roles')
       if (res.meta.status !== 200) {
         return this.message.error('获取角色列表失败')
       }
@@ -396,7 +376,7 @@ export default {
         return this.$message.error('请选择分配的角色')
       }
       const { data: res } = await this.axios.put(
-        `api/users/${this.userInfo.id}/role`,
+        `/users/${this.userInfo.id}/role`,
         {
           rid: this.selectedRoleId
         }

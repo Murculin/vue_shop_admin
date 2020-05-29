@@ -15,6 +15,10 @@ import 'quill/dist/quill.bubble.css'
 Vue.use(VueQuillEditor)
 Vue.component('tree-table', ZkTable)
 Vue.config.productionTip = false
+
+const env = process.env.NODE_ENV
+const baseURL = env === 'development' ? '/api' : 'https://www.liulongbin.top:8888/api/private/v1'
+axios.defaults.baseURL = baseURL
 // axios请求拦截器
 axios.interceptors.request.use(config => {
   config.headers.Authorization = sessionStorage.getItem('token')

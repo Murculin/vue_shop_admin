@@ -77,10 +77,11 @@ export default {
     const myChart1 = echarts.init(document.getElementById('chart1'))
     const myChart2 = echarts.init(document.getElementById('chart2'))
     // 设置配置项
-    const { data: res } = await this.axios.get('/api/reports/type/1')
+    const { data: res } = await this.axios.get('/reports/type/1')
     if (res.meta.status !== 200) {
       return this.$message.error(res.meta.msg)
     }
+    console.log(res.data)
     const option = Object.assign(this.options, res.data)
     // 展示数据
     myChart1.setOption(option)

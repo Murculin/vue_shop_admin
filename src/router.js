@@ -62,6 +62,10 @@ const routes = [
         component: Add
       },
       {
+        path: '/goods/add/:id',
+        component: Add
+      },
+      {
         path: '/orders',
         component: Orders
       },
